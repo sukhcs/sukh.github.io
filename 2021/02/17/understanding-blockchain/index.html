@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Understanding Blockchain | NetR</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Blockchain is comprised of blocks arranged in chronological order, to form a chain. Each block stores a set of transactions. The exact definition of a transaction is specified by the system&#x2F;domain fo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Understanding Blockchain">
+<meta property="og:url" content="http://sukhcs.github.io/2021/02/17/understanding-blockchain/index.html">
+<meta property="og:site_name" content="NetR">
+<meta property="og:description" content="Blockchain is comprised of blocks arranged in chronological order, to form a chain. Each block stores a set of transactions. The exact definition of a transaction is specified by the system&#x2F;domain fo">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://sukhcs.github.io/2021/02/17/understanding-blockchain/blockchain-golang.png">
+<meta property="article:published_time" content="2021-02-18T03:48:15.000Z">
+<meta property="article:modified_time" content="2022-01-02T19:43:07.488Z">
+<meta property="article:author" content="NetR Inc.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://sukhcs.github.io/2021/02/17/understanding-blockchain/blockchain-golang.png">
+  
+    <link rel="alternate" href="/atom.xml" title="NetR" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,700&amp;subset=korean" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <!--<div id="banner"></div>-->
+  <div id="header-outer" class="outer">
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        <a href="/" id="main-nav-title" class="main-nav-link">NetR</a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/services/">Services</a>
+        
+          <a class="main-nav-link" href="/archives/">Blog</a>
+        
+          <a class="main-nav-link" href="/about/">about</a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-understanding-blockchain" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Understanding Blockchain
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/2021/02/17/understanding-blockchain/blockchain-golang.png" alt="Understanding Blockchain"></p>
+<p>Blockchain is comprised of blocks arranged in chronological order, to form a chain. Each block stores a set of transactions. The exact definition of a transaction is specified by the system/domain for which the blockchain has been deployed. The blockchain (also known as a ledger) is replicated across a network of nodes that update and manage the shared ledger.</p>
+<h3 id="Block-Creation"><a href="#Block-Creation" class="headerlink" title="Block Creation"></a>Block Creation</h3><p>A network of nodes participating in a blockchain network records the incoming transactions and shares them with the network. This way, each node gets a copy of the current transactions, known as the “Transaction Mempool”.</p>
+<p>A node can participate in block creation by assembling the transactions in a block and creating a block-hash. It’s possible that more than one node arrives at the same block of transactions, or there could be a race condition while building blocks. In this scenario, the node network needs to build a consensus on the blocks that are included in the blockchain.</p>
+<p>The consensus is arrived at by using a consensus algorithm, for example, by demonstrating “proof of work”. The Proof of Work could be a difficult cryptographic problem, like creating a hash with a certain number of leading zeros at the beginning of the hash (this is determined by the difficulty level of the blockchain network).</p>
+<p>Once the block is finalized and agreed on, the new block is stitched together with the rest of the chain, using a cryptographic hash in chronological order.</p>
+<h3 id="The-Network-Protocol"><a href="#The-Network-Protocol" class="headerlink" title="The Network Protocol"></a>The Network Protocol</h3><p>Blockchain (also known as a ledger), is distributed on a network of nodes. These nodes need to share the new transactions, the new blocks, and the resultant ledger on a frequent basis. This ensures that all nodes have a consistent view and agree with the ledger updates.</p>
+<p>The popular network protocol is the p2p network and/or variations of p2p networks based on the use-case. The p2p is a trustless network protocol, i.e., there’s no real requirement to trust any new nodes that join or leave the network. Unlike Server-Client setups where we specifically use SSL certificates to ensure that the server we are connecting to is trustworthy. Like any other network protocol, p2p relies on initial discovery, in this case, the discovery of peers to handshake and share data. The trustworthiness of the data thus shared is validated and ensured by the blockchain protocol.<br>Next, we’ll look at how to construct a basic blockchain using foundational constructs in code.</p>
+<h3 id="Implementing-Blockchain-in-GoLang"><a href="#Implementing-Blockchain-in-GoLang" class="headerlink" title="Implementing Blockchain in GoLang"></a>Implementing Blockchain in GoLang</h3><p>GoLang is a popular language for implementing Blockchain, in addition to C/C++ and NodeJS.<br>We’ll be implementing the blockchain in its entirety, but not the underlying network protocol. That would be a subject for another tutorial.</p>
+<p>Representing a Block in code</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">type CryptoBlock struct &#123;</span><br><span class="line">   index int</span><br><span class="line">   timestamp string</span><br><span class="line">   data []byte</span><br><span class="line">   precedingHash [32]byte</span><br><span class="line">   hash [32]byte</span><br><span class="line">   nonce int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The block is represented as a GoLang struct.</p>
+<p><em>index</em>: This is also known as the “height” of the blockchain. It is an integer value that increments with each block. Also, a good way to count the number of blocks in the blockchain.</p>
+<p><em>timestamp</em>: This records the date/time at which the block was created usually, the epoch timestamp (also known as, Unix timestamp). It could also be used to record date/time in other formats. Instead of using type “string”, you could use the “Time” type available in Go. Let’s keep things simple and use the “string” type.</p>
+<p><em>data</em>: This is the data that you want to store in a block. This is usually the transaction data represented as an array of bytes.</p>
+<p><em>precedingHash</em>: The blocks in the blockchain are tied together using a hash identifier. A block store the hash of the preceding block. The first block is known as a genesis block and may not store anything here.</p>
+<p><em>hash</em>: The computed hash-value of this block. This ensures the integrity of the current block. Any change to the block’s data will result in the hash being invalidated.</p>
+<p><em>nonce</em>: This is a random integer value that is used as a salt and varied between 0 and 2³² (blockchain specific) to generate different hashes for the block. Only one computed hash-value will ultimately meet the requirement as specified by the “difficulty” and “proof of work” algorithm and will be included in the blockchain.</p>
+<p>Next, let’s initialize the block creation using a constructor/initializer function.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">func NewCryptoBlock(index int, timestamp string, data []byte ) *CryptoBlock &#123;</span><br><span class="line">   cb :&#x3D; new(CryptoBlock)</span><br><span class="line">   cb.index &#x3D; index</span><br><span class="line">   cb.timestamp &#x3D; timestamp</span><br><span class="line">   cb.data &#x3D; data</span><br><span class="line">   cb.precedingHash &#x3D; [32]byte&#123;0&#125;</span><br><span class="line">   cb.hash &#x3D; cb.computeHash()</span><br><span class="line">   cb.nonce &#x3D; 0</span><br><span class="line">   return cb</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>When invoked, the initializer function will return a new block with the index, current timestamp, and data.<br>The constructor uses a “computeHash()” function, which is not necessary at this point but is only specified for completeness.<br>The nonce is set to 0. This will be varied by the “Proof of Work” algorithm later and “computeHash()” called again. Let’s keep it aside for now and just define the “computeHash()” function.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">func (cb *CryptoBlock) computeHash() [32]byte &#123;</span><br><span class="line">   s :&#x3D; strconv.Itoa(cb.index) + string(cb.precedingHash[:]) + cb.timestamp + string(cb.data) + strconv.Itoa(cb.nonce)</span><br><span class="line">   b :&#x3D; []byte(s)</span><br><span class="line">   return sha256.Sum256(b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Representing BlockChain in code</p>
+<p>Let’s declare what a Blockchain is, in code using the following code snippet.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">type CryptoBlockChain struct &#123;</span><br><span class="line">   blockchain []*CryptoBlock</span><br><span class="line">   difficulty int</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>blockchain: An array of blocks of type “CryptoBlock”. CryptoBlock is the Block abstraction as specified earlier.<br>difficulty: The parameter controls how much work is required to create the “hash” of a block.<br>Next, define a constructor function to initialize a fresh instance of blockchain.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func NewCryptoBlockChain() *CryptoBlockChain &#123;</span><br><span class="line">   cbc :&#x3D; new(CryptoBlockChain)</span><br><span class="line">   cbc.blockchain &#x3D; []*CryptoBlock&#123;cbc.startGenesisBlock()&#125;</span><br><span class="line">   cbc.difficulty &#x3D; 3</span><br><span class="line">   return cbc</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>A fresh instance of blockchain needs to have at least one block, known as the “Genesis Block”. The constructor above uses the function startGenesisBlock to construct one for the new blockchain.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) startGenesisBlock() *CryptoBlock &#123;</span><br><span class="line">   genesisBlock :&#x3D; NewCryptoBlock(0, &quot;01&#x2F;01&#x2F;2021&quot;, []byte(&quot;Genesis Block&quot;))</span><br><span class="line">   return genesisBlock</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>A blockchain is a series of blocks. We need a helper function to get the latest block on the blockchain.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) obtainLatestBlock() *CryptoBlock &#123;</span><br><span class="line">   return cbc.blockchain[len(cbc.blockchain) - 1]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>To add a new block to the blockchain, we need an AddNewBlock function</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) AddNewBlock(newBlock *CryptoBlock) &#123;</span><br><span class="line">   newBlock.precedingHash &#x3D; cbc.obtainLatestBlock().hash</span><br><span class="line">   &#x2F;&#x2F;newBlock.hash &#x3D; newBlock.computeHash()</span><br><span class="line">   cbc.proofOfWork(newBlock, cbc.difficulty)</span><br><span class="line">   cbc.blockchain &#x3D; append(cbc.blockchain, newBlock)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>As you would observe the AddNewBlock function, gets the hash of the preceding block and set it to the “precedingHash” field of the current block.<br>Also, the new block needs to go through a proof of work function to calculate its own hash before it gets added to the blockchain.<br>The proof of work function is as follows:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) proofOfWork(newBlock *CryptoBlock, difficulty int) &#123;</span><br><span class="line"></span><br><span class="line">   var a []byte</span><br><span class="line"></span><br><span class="line">   for i:&#x3D; 0; i &lt; difficulty; i++ &#123;</span><br><span class="line">      a &#x3D; append(a, 0)</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   for bytes.Compare(newBlock.hash[0:difficulty], a) !&#x3D; 0 &#123;</span><br><span class="line">      fmt.Println(&quot;COMPUTING HASH: currentHash&quot;, newBlock.hash[0:difficulty], &quot; targetHash: &quot;, a, &quot; nonce: &quot;, newBlock.nonce)</span><br><span class="line">      newBlock.nonce++</span><br><span class="line">      newBlock.hash &#x3D; newBlock.computeHash()</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Once the generated “hash” meets the current difficulty it is added to the chain. The proof of work requires that there has to be a certain number of zeros (equal to the difficulty) at the beginning of the generated hash. If the generated “hash” does not meet the difficulty it is calculated again and then again it is tested against the requirement.<br>Next, we need a function to validate the generated blockchain.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) CheckChainValidity() (bool, error)&#123;</span><br><span class="line">   for i :&#x3D; 0; i &lt; len(cbc.blockchain); i++ &#123;</span><br><span class="line">      currentBlock :&#x3D; cbc.blockchain[i]</span><br><span class="line"></span><br><span class="line">      if currentBlock.hash !&#x3D; currentBlock.computeHash() &#123;</span><br><span class="line">         fmt.Println(&quot;BLOCKCHAIN VALIDATION: currentBlockHash: &quot;, currentBlock.hash, &quot; computeHash: &quot;, currentBlock.computeHash())</span><br><span class="line">         return false, nil</span><br><span class="line">      &#125;</span><br><span class="line">      if i &gt; 0 &amp;&amp; currentBlock.precedingHash !&#x3D; cbc.blockchain[i-1].hash &#123;</span><br><span class="line">         fmt.Println(&quot;BLOCKCHAIN VALIDATION: currentBlock.PrecedingHash: &quot;, currentBlock.precedingHash, &quot; blockchain preceding hash &quot;, cbc.blockchain[i-1].hash)</span><br><span class="line">         return false, nil</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   return true, nil</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Also, we could print the blocks present in the blockchain. This could be used by the blockchain explorer for displaying information.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">func (cbc *CryptoBlockChain) PrintBlockChain() &#123;</span><br><span class="line">   fmt.Println(len(cbc.blockchain))</span><br><span class="line">   for i, v :&#x3D; range cbc.blockchain &#123;</span><br><span class="line">      fmt.Println(&quot;Index: &quot;, i, &quot; Value:&quot;, v.hash, &quot; Data:&quot;, string(v.data))</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We get all this together by setting up the main function to call these in sequence.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">func main() &#123;</span><br><span class="line"></span><br><span class="line">   onChain :&#x3D; blockchain.NewCryptoBlockChain()</span><br><span class="line">   onChain.AddNewBlock(blockchain.NewCryptoBlock(1, &quot;01&#x2F;06&#x2F;2020&quot;, []byte(&quot;&#123;sender: &#39;A&#39;, recipient: &#39;B&#39;, quantity: 50&#125;&quot;)))</span><br><span class="line">   onChain.AddNewBlock(blockchain.NewCryptoBlock(2, &quot;01&#x2F;07&#x2F;2020&quot;, []byte(&quot;&#123;sender: &#39;B&#39;, recipient: &#39;A&#39;, quantity: 100&#125;&quot;)))</span><br><span class="line">   onChain.PrintBlockChain()</span><br><span class="line">   valid, err :&#x3D; onChain.CheckChainValidity()</span><br><span class="line">   if !valid &amp;&amp; err &#x3D;&#x3D; nil &#123;</span><br><span class="line">      fmt.Println(&quot;blockchain tampered!&quot;)</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">      fmt.Println(&quot;blockchain valid!&quot;)</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>A sample output from the resultant blockchain. Three blocks, including the Genesis Block, are generated by the program.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Index: 0 Value: [121 111 81 168 31 208 56 59 105 135 88 239 192 189 136 22 229 150 80 227 134 218 164 156 1 54 204 2 217 222 169 0] Data: Genesis Block</span><br><span class="line">Index: 1 Value: [0 20 246 166 6 182 173 39 1 1 202 216 231 180 206 6 69 96 144 95 127 131 215 86 241 36 189 246 230 67 251 152] Data: &#123;sender: ‘A’, recipient: ‘B’, quantity: 50&#125;</span><br><span class="line">Index: 2 Value: [0 232 7 99 48 89 139 148 59 153 208 156 3 67 4 68 95 39 94 46 156 15 21 177 247 177 146 163 162 245 232 143] Data: &#123;sender: ‘B’, recipient: ‘A’, quantity: 100&#125;</span><br><span class="line">blockchain valid!</span><br></pre></td></tr></table></figure>
+<p>A complete source code of the program is available on Github at <a target="_blank" rel="noopener" href="https://github.com/sukhcs/onchain">https://github.com/sukhcs/onchain</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://sukhcs.github.io/2021/02/17/understanding-blockchain/" data-id="ckxybhbci0000x1rk3yfueq5x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+      </div>
+      <footer id="footer" class="footerCustom">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 NetR Inc.<br>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/services/" class="mobile-nav-link">Services</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Blog</a>
+  
+    <a href="/about/" class="mobile-nav-link">about</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
