@@ -6,6 +6,7 @@ class Footer extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <footer class="gap-top bounceInUp animated container">
+        <!--
             <div class="box square charcoal" style="background-color: black;">
                 <div class="container padded">
                 <div class="row">
@@ -26,6 +27,17 @@ class Footer extends HTMLElement {
                 </div>
                 </div>
             </div>
+        -->
+        <div class="container">
+            <div class="padded">
+            <div class="row" align="center">
+                <div class="bounceInRight animated">
+                &nbsp;<h5 class="zero museo-slab">For business enquiries: </h5>
+                <img src="images/ml.png">
+                </div>
+            </div>
+            </div>
+            <div style="padding-bottom: 20px;"></div>
             <div class="box square" style="background-color: black;border-width: 0px">
                 <div class="container padded">
                 <div class="row">
@@ -35,6 +47,7 @@ class Footer extends HTMLElement {
                 </div>
                 </div>
             </div>
+    
         </footer>
       `;
     }

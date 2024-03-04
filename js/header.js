@@ -23,12 +23,15 @@ class Header extends HTMLElement {
         </style>
         <header class="padded">
             <div class="container">
+                
                 <div class="row">
                     <div class="one half">
-                        <h2 class="logo"><a href="/" target="_parent"><img src="images/logo_netr_box.png" alt="NetR"></a></h2>
+                        <div style="font-size:50px;font-weight: bold;color: #4171ab;">NetR</div>
+                        <!--<h2 class="logo"><a href="/" target="_parent"><img src="images/logo_netr_box.png" alt="NetR"></a></h2>-->
                     </div>
                 </div>
-                <nav role="navigation" class="nav gap-top blue">
+                <!--
+                <nav role="navigation" class="nav gap-top black">
                     <ul role="menubar">
                         <li><a href="index.html"><i class="icon-home"></i> Home</a></li>
                         <li role="menu">
@@ -41,6 +44,7 @@ class Header extends HTMLElement {
                         <li><a href="contact.html"> Contact</a></li>
                     </ul>
                 </nav>
+                -->
             </div>
         </header>
       `;
