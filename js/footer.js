@@ -6,7 +6,7 @@ class Footer extends HTMLElement {
     connectedCallback() {
         this.innerHTML = `
         <footer class="gap-top bounceInUp animated container">
-            <div class="box square charcoal">
+            <div class="box square charcoal" style="background-color: black;">
                 <div class="container padded">
                 <div class="row">
                     <div class="one small-tablet fourth padded">
@@ -26,11 +26,11 @@ class Footer extends HTMLElement {
                 </div>
                 </div>
             </div>
-            <div class="box square">
+            <div class="box square" style="background-color: black;border-width: 0px">
                 <div class="container padded">
                 <div class="row">
                     <div align="center">
-                    &copy; NetR Inc. 2022
+                    &copy; NetR Inc. 2024
                     </div>
                 </div>
                 </div>
